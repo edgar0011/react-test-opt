@@ -2,12 +2,12 @@
  * Created by edgar on 11/01/2017.
  */
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
-import todoReducer from '../reducers/todoReducer';
+import calcReducer from '../reducers/calcReducer';
 import userReducer from '../reducers/userReducer';
 
 import thunk from 'redux-thunk';
 
-const rootReducer = combineReducers({todos:todoReducer, users:userReducer});
+const rootReducer = combineReducers({calculations:calcReducer, users:userReducer});
 
 class Store {
 
@@ -30,7 +30,7 @@ const enhancer = composeEnhancers(
   // other store enhancers if any
 );
 
-const store = createStore(rootReducer, {todos:{todos:[]}, users:{users:[], user:null}}, enhancer);
+const store = createStore(rootReducer, {calculations:{result:{volatility:0, price:0, errorMessages:[]}}, users:{users:[], user:null}}, enhancer);
 
 
 store.subscribe(()=>{

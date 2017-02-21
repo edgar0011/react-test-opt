@@ -1,6 +1,8 @@
 /**
  * Created by edgar on 11/01/2017.
+ * just to show some async actions, state handling
  */
+
 import { USER_LOADED, USER_LOADING, USER_LOAD_FAILED } from '../config/CONSTANTS';
 import { USERS_LOADED, USERS_LOADING, USERS_LOAD_FAILED } from '../config/CONSTANTS';
 import UserService from '../dataApi/UserService';
@@ -13,7 +15,10 @@ export function getUsers() {
 
     return userService.getUsers()
       .then(response => {
-        dispatch(usersLoaded(response.data));
+        //setTimeout(()=> {
+          dispatch(usersLoaded(response.data));
+        //}, 5000);
+
       }, errors => {
         dispatch(usersLoadFailed(errors));
       });

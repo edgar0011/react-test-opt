@@ -8,27 +8,22 @@ import { connect } from 'react-redux';
 
 import BasicInput from '../ui/BasicInput';
 
-import * as addTodoActions from '../../actions/todoActions';
-
-import {TODOS} from '../../styles/basic';
+import * as calcActions from '../../actions/calcActions';
 
 
 @connect((store)=> {
-  return {
-    todos: store.todos
-  }
-}, {addTodo: addTodoActions.addTodo, removeTodo: addTodoActions.removeTodo})
+  return {calculations: store.calculations}
+}, {calculateVolatility: calcActions.calculateVolatility, calculatePrice: calcActions.calculatePrice})
 export default class Calc extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      emphasized:false
+      result:{volatility:0, price:0, errorMessages:[]},
+      valid:false
     };
-    this.handleClick = this.handleClick.bind(this);
-    this.handleAddTodo = this.handleAddTodo.bind(this);
-    this.handleRemoveTodo = this.handleRemoveTodo.bind(this);
 
-    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.onChangeHandler1 = this.onChangeHandler1.bind(this);
+    this.onChangeHandler2 = this.onChangeHandler2.bind(this);
 
     this.formatters = [(value, prevValue) => {
       if (isNaN(Number(value))) {
@@ -43,60 +38,72 @@ export default class Calc extends React.Component {
     }]
   }
 
-  handleClick(event) {
-    this.setState({emphasized:!this.state.emphasized});
+  submitHandler(event) {
+    //this.setState({emphasized:!this.state.emphasized});
   }
 
-  handleAddTodo() {
-    this.props.addTodo(this.textBasicInput.state.value);
-    this.textBasicInput.reset();
-    this.setState({textBasicInputValue: null });
-
-  }
-  handleRemoveTodo(index) {
-    const {todos} = this.props.todos;
-    this.props.removeTodo(todos[index].id);
+  onChangeHandler1(basicInputState) {
+      this.props.calculatePrice(this.textBasicInput1.state.value);
   }
 
-
-  onChangeHandler(basicInputState) {
-      this.setState({textBasicInputValue: this.textBasicInput.state.value });
+  onChangeHandler2(basicInputState) {
+    this.props.calculateVolatility(this.textBasicInput2.state.value);
   }
 
   render() {
     const title = 'Todo';
-    const todoStyle = TODOS.TODO.TEXT;
 
-    const todos = this.props.todos.todos.map((todo, index) => {
+    const errorMessages = this.state.result.errorMessages.map((errorMessage, index) => {
       return (
-        <li class="list-group-item" key={'todo' + index}>
-          <span class="float-left" style={todoStyle}>{todo.todo}</span>
-          <span class=" float-right">
-            <span class="fa fa-remove"
-                  style={{color:'#666', fontSize: '120%', cursor:'pointer'}}
-                  onClick={this.handleRemoveTodo.bind(this, index)}>
-
-            </span>
-          </span>
+        <li class="list-group-item" key={'errorMessages' + index}>
+          <span class="float-left" >{errorMessages.text}</span>
         </li>
       )
     });
 
-    const disabledAdd = this.textBasicInput ? !this.textBasicInput.state.value : false;
+    const disabledAdd1 = this.textBasicInput1 ? !this.textBasicInput1.state.value : false;
+    const disabledAdd2 = this.textBasicInput2 ? !this.textBasicInput2.state.value : false;
+
+    console.log(this.props.calculations);
+    const {result} = this.props.calculations;
+    const {valid} = result;
 
     return (
       <div>
         <h3>{title}</h3>
-        <div>
-          <BasicInput ref={(input) => { this.textBasicInput = input; }}
-                      onChangeHandler={this.onChangeHandler}
-                      changeBounce="100" value="Karel 1"
-                      formatters={this.formatters}
 
-          />
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-6">
+              <BasicInput ref={(input) => { this.textBasicInput1 = input; }}
+                          onChangeHandler={this.onChangeHandler1}
+                          changeBounce="100" value={result.volatility}
+                          formattersX={this.formatters}
+
+              />
+            </div>
+            <div class="col-md-6">
+              <BasicInput ref={(input) => { this.textBasicInput2 = input; }}
+                          onChangeHandler={this.onChangeHandler2}
+                          changeBounce="100" value={result.price}
+                          formattersX={this.formatters}
+
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              {errorMessages && errorMessages.length>0 && <ul class="list-group col-4">{errorMessages}</ul>}
+              <span>Volatility: {result.volatility}</span>
+              <span>Price: {result.price}</span>
+            </div>
+            <div class="col-md-6">
+              <Button color="primary" onClick={this.submitHandler} disabled={!valid}>Submit</Button>
+
+            </div>
+          </div>
         </div>
-        <Button color="primary" onClick={this.handleAddTodo} disabled={!this.state.textBasicInputValue}>ADD TODO</Button>
-        {todos && todos.length>0 && <ul class="list-group col-4">{todos}</ul>}
+
       </div>
     )
   }

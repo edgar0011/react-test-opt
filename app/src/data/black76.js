@@ -7,7 +7,7 @@
  *
  */
  
-import { normCDF } from '../src/stat'
+import { normCDF } from './stat'
 
 export function black76(type, param, ulPrice, strike, rate, time, vola) {
     const errorValue = NaN

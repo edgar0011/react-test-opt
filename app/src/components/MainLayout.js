@@ -12,14 +12,14 @@ export default class MainLayout extends React.Component {
     }
 
     render() {
-        const title = 'Layout';
+        const title = 'OPT X test assignment';
 
         return (
             <div class="jumbotron">
               <h1>{title}</h1>
               <ul class=" nav justify-content-center">
                 <li><Link to="/" activeClassName="active" class="nav-item nav-link">Main</Link></li>
-                <li><Link to="todo" activeClassName="active" class="nav-item nav-link">Todo</Link></li>
+                <li><Link to="todo" activeClassName="active" class="nav-item nav-link">Calculator</Link></li>
               </ul>
 
               <div>{this.props.children}</div>

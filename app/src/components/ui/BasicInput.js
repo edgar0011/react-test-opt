@@ -40,7 +40,7 @@ export default class BasicInput extends React.Component {
 
   render(){
     return (
-      <input type={this.props.type || 'text'} onChange={this.onChangeHandler} value={this.state.value} pattern={this.props.pattern} />
+      <input type={this.props.type || 'text'} onChange={this.onChangeHandler} value={this.props.value || this.state.value} pattern={this.props.pattern} />
     )
   }
 
