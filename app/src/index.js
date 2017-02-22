@@ -24,7 +24,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={MainLayout}>
         <IndexRoute component={Main} ></IndexRoute>
-        <Route path="todo" component={Calc}></Route>
+        <Route path="calc" component={Calc}></Route>
       </Route>
     </Router>
   </Provider>

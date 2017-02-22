@@ -19,6 +19,7 @@ export default class Calc extends React.Component {
     super(props);
     this.state = {
       result:{volatility:0, price:0, errorMessages:[]},
+      lastInput:null,
       valid:false
     };
 
@@ -33,8 +34,8 @@ export default class Calc extends React.Component {
         value = prevValue;
       }
 
-      const val2Str = parseInt(value.toString());
-      return !!value ? (isNaN(val2Str) ? '' : val2Str) : '';
+      const val2Str = parseFloat(value.toString());
+      return !!val2Str ? (isNaN(val2Str) ? '' : val2Str) : '';
     }]
   }
 
@@ -42,12 +43,16 @@ export default class Calc extends React.Component {
     //this.setState({emphasized:!this.state.emphasized});
   }
 
+
+
   onChangeHandler1(basicInputState) {
       this.props.calculatePrice(this.textBasicInput1.state.value);
+      this.setState({lastInput:this.textBasicInput1});
   }
 
   onChangeHandler2(basicInputState) {
     this.props.calculateVolatility(this.textBasicInput2.state.value);
+    this.setState({lastInput:this.textBasicInput2});
   }
 
   render() {
@@ -68,6 +73,14 @@ export default class Calc extends React.Component {
     const {result} = this.props.calculations;
     const {valid} = result;
 
+    if (this.state.lastInput && this.state.lastInput === this.textBasicInput1) {
+      console.log("should update textBasicInput2");
+    }
+
+    if (this.state.lastInput && this.state.lastInput === this.textBasicInput2) {
+      console.log("should update textBasicInput1");
+    }
+
     return (
       <div>
         <h3>{title}</h3>
@@ -78,7 +91,7 @@ export default class Calc extends React.Component {
               <BasicInput ref={(input) => { this.textBasicInput1 = input; }}
                           onChangeHandler={this.onChangeHandler1}
                           changeBounce="100" value={result.volatility}
-                          formattersX={this.formatters}
+                          formatters={this.formatters}
 
               />
             </div>
@@ -86,7 +99,7 @@ export default class Calc extends React.Component {
               <BasicInput ref={(input) => { this.textBasicInput2 = input; }}
                           onChangeHandler={this.onChangeHandler2}
                           changeBounce="100" value={result.price}
-                          formattersX={this.formatters}
+                          formatters={this.formatters}
 
               />
             </div>

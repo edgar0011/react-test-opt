@@ -15,7 +15,7 @@ export default function calcReducer(state = {result:{volatility:0, price:0, erro
     console.log("volatility claculated");
     console.log(volatility);
     return {
-      ...state, result:{...state.result, volatility}
+      ...state, result:{...state.result, volatility, price:input}
     }
   }
   if (type === CALCULATE_PRICE) {
@@ -24,7 +24,7 @@ export default function calcReducer(state = {result:{volatility:0, price:0, erro
     console.log("price claculated");
     console.log(price);
     return {
-      ...state, result:{...state.result, price}
+      ...state, result:{...state.result, price, volatility:input}
     }
   }
   return state;

@@ -19,7 +19,7 @@ export default class MainLayout extends React.Component {
               <h1>{title}</h1>
               <ul class=" nav justify-content-center">
                 <li><Link to="/" activeClassName="active" class="nav-item nav-link">Main</Link></li>
-                <li><Link to="todo" activeClassName="active" class="nav-item nav-link">Calculator</Link></li>
+                <li><Link to="calc" activeClassName="active" class="nav-item nav-link">Calculator</Link></li>
               </ul>
 
               <div>{this.props.children}</div>
