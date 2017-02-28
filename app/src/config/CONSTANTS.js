@@ -3,6 +3,10 @@
  */
 export const CALCULATE_VOLATILITY = 'calculateVolatility';
 export const CALCULATE_PRICE = 'calculatePrice';
+export const CALC_SUBMIT_INPUT = 'calcSubmitInput';
+export const CALC_SUBMIT_LOADING = 'calcSubmitLoading';
+export const CALC_SUBMIT_LOADED = 'calcSubmitLoaded';
+export const CALC_SUBMIT_FAILED = 'calcSubmitFailed';
 
 export const USERS_LOAD = 'usersLoad';
 export const USERS_LOADED = 'usersLoaded';

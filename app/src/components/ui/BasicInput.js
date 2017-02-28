@@ -51,10 +51,13 @@ export default class BasicInput extends React.Component {
 
   render(){
 
-    let {value} = this.state;
+    const {value} = this.state;
+    const {props} = this;
+
+    console.log("BasicInput props", props);
 
     return (
-      <input type={this.props.type || 'text'} onChange={this.onChangeHandler} value={value} pattern={this.props.pattern} />
+      <input type={props.type || 'text'} class={props.className} onChange={this.onChangeHandler} value={value} pattern={props.pattern} />
     )
   }
 
