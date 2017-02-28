@@ -37,3 +37,12 @@ Requirements
 ○ React
 ○ Redux
 ● Please write at least some tests
+
+
+# RUN
+
+## install
+- npm install
+- build - simple build app
+- dev - run webpack ev server with watch
+- dev2 - run webpack ev server with hot module reload
