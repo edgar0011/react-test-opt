@@ -10,7 +10,7 @@ export default class CalcService extends ServiceBase {
   }
 
   submitCalculation(data) {
-    return super.post(CALCULATION_URL, data, {withCredentials: true, headers: {'Content-Type':'application/x-www-form-urlencoded;charset=utf-8'}});
+    return super.post(CALCULATION_URL, data, {withCredentials: true, headers: {'Content-Type':'application/json'}});
   }
 
 }
